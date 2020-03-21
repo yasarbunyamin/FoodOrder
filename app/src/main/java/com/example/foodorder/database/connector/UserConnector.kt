@@ -21,12 +21,14 @@ class UserConnector{
         val user = User(name, surname, email, password, address,city,phone)
         val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
 
+         val userId=database.push().key
          //database.child("user").child(userId).setValue(user)
 
-         val users: MutableMap<String, User> = HashMap()
-         users[userId] = user
+         //val users: MutableMap<String, User> = HashMap()
+         //users[userId] = user
 
-         database.setValue(users);
+         //database.setValue(users);
+         database.child(userId!!).setValue(user)
 
 
          /* database.child(userId).child("name").setValue(name)
