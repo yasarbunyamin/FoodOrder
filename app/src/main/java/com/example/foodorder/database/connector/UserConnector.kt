@@ -10,20 +10,21 @@ import com.google.firebase.database.FirebaseDatabase
 
 class UserConnector{
 
-    private  var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+    //private  var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
 
 
 
 
 
-     fun writeNewUser(userId: String, name: String?, surname:String?,
+     fun writeNewUser(userId: String, name: String, surname:String,
                                 email: String? ,password:String?, address:String?,city:String?, phone:String? ) {
         val user = User(name, surname, email, password, address,city,phone)
+        val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
 
          //database.child("user").child(userId).setValue(user)
 
          val users: MutableMap<String, User> = HashMap()
-         users["alanisawesome"] = user
+         users[userId] = user
 
          database.setValue(users);
 

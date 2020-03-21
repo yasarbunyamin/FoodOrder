@@ -121,7 +121,7 @@ class SignUpFragment : Fragment() {
                         userConnector = UserConnector()
                         Log.i("UserID", FirebaseInstanceId.getInstance().id)
 
-                        userConnector.writeNewUser(userId = FirebaseInstanceId.getInstance().id ,name = firstName,surname = lastName,email = email,
+                        userConnector.writeNewUser(userId = firstName!! ,name = firstName!!,surname = lastName!!,email = email,
                                                     password = password,address = address,city = city,phone = phone)
 
                         navController.navigate(R.id.action_signUpFragment_to_loginFragment)
