@@ -1,11 +1,9 @@
 package com.example.foodorder.database.connector
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.foodorder.database.User
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-
-
-
+import com.google.firebase.database.*
 
 
 class UserConnector{
@@ -39,7 +37,23 @@ class UserConnector{
           database.child(userId).child("city").setValue(city)
           database.child(userId).child("phone").setValue(phone)*/
 
+         val postListener = object : ValueEventListener {
+             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                 // Get Post object and use the values to update the UI
+                 val post = dataSnapshot.getValue()
+
+             }
+
+             override fun onCancelled(databaseError: DatabaseError) {
+                 // Getting Post failed, log a message
+                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                 // ...
+             }
+         }
+         database.addValueEventListener(postListener)
 
      }
+
+
 
 }

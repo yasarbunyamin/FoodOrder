@@ -1,5 +1,6 @@
 package com.example.foodorder.fragment
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -16,6 +17,9 @@ import com.example.foodorder.R
 import com.example.foodorder.utils.ProgressDisplay
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -63,6 +67,7 @@ class LoginFragment() : Fragment(),View.OnClickListener,ProgressDisplay {
         etEmail = view?.findViewById(R.id.login_email)
         etPassword = view?.findViewById(R.id.login_password)
         show()
+
         when(v!!.id){
             R.id.login_button -> loginAction()
             R.id.sign_up_button -> signUpAction()
@@ -80,6 +85,18 @@ class LoginFragment() : Fragment(),View.OnClickListener,ProgressDisplay {
 
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
+        val db = Firebase.firestore
+
+        val city = hashMapOf(
+            "name" to "Los Angeles",
+            "state" to "CA",
+            "country" to "USA"
+        )
+
+        db.collection("home").document("LA")
+            .set(city)
+            .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
+            .addOnFailureListener {  Log.w(ContentValues.TAG, "Error writing document") }
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(),OnCompleteListener { task ->
@@ -112,4 +129,7 @@ class LoginFragment() : Fragment(),View.OnClickListener,ProgressDisplay {
             (activity as ProgressDisplay?)!!.hide()
         }
     }
+
+
+
 }
